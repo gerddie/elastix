@@ -284,6 +284,33 @@ CombinationImageToImageMetric< TFixedImage, TMovingImage >
 } // end SetNumberOfMetrics()
 
 
+template< class TFixedImage, class TMovingImage >
+unsigned int 
+CombinationImageToImageMetric< TFixedImage, TMovingImage >
+::GetNumberOfImageMetrics() const
+{
+        int retval = 0; 
+        /*
+          In C++11 with proper class hierarchy 
+          this would look more like 
+          
+          for( auto m : this->m_Metrics ) {
+            if (m.IsImageMetric()) {
+               ++retval; 
+            }
+          }
+          
+        */
+        for ( int i = 0; i < this->GetNumberOfMetrics(); ++i )
+        {
+           if ( dynamic_cast< const ImageMetricType * >( this->GetMetric(i) ) ) 
+           {
+             ++retval;
+           }
+        }
+        return retval; 
+}
+
 /**
  * ********************* SetMetric ****************************
  */

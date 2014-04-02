@@ -168,6 +168,9 @@ public:
   /** Set the number of metrics to combine. */
   void SetNumberOfMetrics( unsigned int count );
 
+  /** Get the number of metrics that are based on ImageToImageMetric */
+  unsigned int GetNumberOfImageMetrics() const; 
+
   /** Get the number of metrics to combine. */
   itkGetConstMacro( NumberOfMetrics, unsigned int );
 
