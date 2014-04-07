@@ -1236,38 +1236,26 @@ CombinationImageToImageMetric< TFixedImage, TMovingImage >
 
 } // end GetMTime()
 
-} // end namespace itk
-
-namespace itk {
 template< class TFixedImage, class TMovingImage >
 unsigned int 
 CombinationImageToImageMetric< TFixedImage, TMovingImage >
 ::GetNumberOfImageMetrics() const
 {
         unsigned int retval = 0; 
-        /*
-          In C++11 with proper class hierarchy 
-          this would look more like 
-          
-          for( auto m : this->m_Metrics ) {
-            if (m.IsImageMetric()) {
-               ++retval; 
-            }
-          }
-          
-        */
         typedef TransformPenaltyTerm<TFixedImage, double> TransformPenaltyTermType; 
         for ( int i = 0; i < this->GetNumberOfMetrics(); ++i )
         {
            const ImageMetricType * testptr = dynamic_cast< const ImageMetricType * >( this->GetMetric(i)); 
            if ( testptr ) 
            {
-                   if (dynamic_cast< const TransformPenaltyTermType * >( testptr ) == NULL)
-                           ++retval;
+              // TransformPenaltyTermType is derived from ImageMetricType, so to rule it out 
+              // we need another test (or add a ReallyIsImagebasedMetric() to AdvancedImageToImageMetric)
+              if (dynamic_cast< const TransformPenaltyTermType * >( testptr ) == NULL)
+                 ++retval;
            }
         }
         return retval; 
-}
+} // end GetNumberOfImageMetrics()
 
 }
 
