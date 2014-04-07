@@ -1257,7 +1257,7 @@ CombinationImageToImageMetric< TFixedImage, TMovingImage >
         return retval; 
 } // end GetNumberOfImageMetrics()
 
-}
+} // end namespace itk
 
 
 
